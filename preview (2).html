@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Votación Campamento 2027</title>
+
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background: linear-gradient(135deg, #4facfe, #00f2fe);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+
+    .card {
+      background: white;
+      padding: 30px;
+      border-radius: 20px;
+      width: 320px;
+      text-align: center;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+      animation: fadeIn 0.6s ease;
+    }
+
+    h1 {
+      font-size: 20px;
+      margin-bottom: 20px;
+    }
+
+    input {
+      width: 90%;
+      padding: 12px;
+      border-radius: 10px;
+      border: 1px solid #ccc;
+      margin-bottom: 20px;
+      font-size: 14px;
+    }
+
+    .btn {
+      width: 100%;
+      padding: 15px;
+      margin: 8px 0;
+      border: none;
+      border-radius: 12px;
+      font-size: 16px;
+      cursor: pointer;
+      transition: 0.2s;
+      color: white;
+    }
+
+    .btn:hover {
+      transform: scale(1.05);
+    }
+
+    .btn1 { background: #4CAF50; }
+    .btn2 { background: #2196F3; }
+    .btn3 { background: #FF9800; }
+
+    #msg {
+      margin-top: 15px;
+      font-size: 14px;
+    }
+
+    @keyframes fadeIn {
+      from {opacity: 0; transform: translateY(20px);}
+      to {opacity: 1; transform: translateY(0);}
+    }
+  </style>
+</head>
+
+<body>
+
+<div class="card">
+  <h1>🏕️ Campamento 2027</h1>
+
+  <input type="text" id="nombre" placeholder="Tu nombre">
+
+  <button class="btn btn1" onclick="votar('Opcion 1')">🌲 Opción 1</button>
+  <button class="btn btn2" onclick="votar('Opcion 2')">🌊 Opción 2</button>
+  <button class="btn btn3" onclick="votar('Opcion 3')">🏕️ Opción 3</button>
+
+  <p id="msg"></p>
+</div>
+
+<script>
+function votar(opcion) {
+  var nombre = document.getElementById("nombre").value;
+
+  if(nombre.trim() === "") {
+    document.getElementById("msg").innerHTML = "⚠️ Ingresá tu nombre";
+    return;
+  }
+
+  fetch("https://script.google.com/macros/s/AKfycbwzwI0hXBkHkHIRloJbzE9lMoysu0El0id0Xxaves0aic6Cxilp170tbbGBgYT2cuI/exec", {
+    method: "POST",
+    body: JSON.stringify({ nombre: nombre, voto: opcion })
+  })
+  .then(() => {
+    document.getElementById("msg").innerHTML = "✅ Gracias " + nombre + "!";
+  })
+  .catch(() => {
+    document.getElementById("msg").innerHTML = "❌ Error al votar";
+  });
+}
+</script>
+
+</body>
+</html>
